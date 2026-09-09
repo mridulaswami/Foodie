@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
-import com.laPasta.foodie.entity.User;
+import com.laPasta.foodie.entity.UserEntity;
 import com.laPasta.foodie.service.UserService;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class UserServiceT {
 	public void saveUserT() {
 		
 		try{
-			User user1 = new User();
+			UserEntity user1 = new UserEntity();
 		
 		
 		user1.setName("Utkarsh");

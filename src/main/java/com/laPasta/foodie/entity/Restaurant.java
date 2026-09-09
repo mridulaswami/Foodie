@@ -1,40 +1,55 @@
 package com.laPasta.foodie.entity;
 
-import java.time.LocalTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "restaurant")
 @Getter
 @Setter
-@Table(name="restaurants")
 public class Restaurant {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	private Long id;
+
 	private String name;
-	
+
+	@Column(nullable = false)
 	private String address;
-	
+
 	private LocalTime openTime;
-	
-	private LocalTime closingTime;
-	
-	private boolean isOpen;
+
+	private LocalTime closeTime;
+
+	private Boolean isOpen = true;
+
+	@ManyToOne
+	@JoinColumn(name = "created_by")
+	private UserEntity admin;
+
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+
+	@OneToMany(
+			mappedBy = "restaurant",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
+	private List<FoodItem> foodItems = new ArrayList<>();
+
 	
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
-	private User user;
+	private UserEntity user;
 
 }
